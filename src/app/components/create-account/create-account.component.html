@@ -1,0 +1,88 @@
+<!--
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/forms'),
+    ],
+  }
+  ```
+-->
+<!--
+  This example requires updating your template:
+
+  ```
+  <html class="h-full bg-white">
+  <body class="h-full">
+  ```
+-->
+<div class="bg-zinc-900 flex h-screen">
+    <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+      <div class="mx-auto w-full max-w-sm lg:w-96">
+        <div class="animate-slideRight0">
+          <img class="h-16 w-auto" src="assets/images/logo.png" alt="Your Company">
+          <h2 class="mt-8 text-2xl font-bold  leading-9 tracking-tight text-gocolor">Create account</h2>
+          <p class="mt-2 text-sm leading-6 text-gray-500">
+            already a member?
+            <a routerLink="/sign_in" class="font-semibold text-gocolor hover:text-darker duration-200">Sign In</a>
+          </p>
+        </div>
+  
+        <div class="mt-10">
+          <div>
+            <form action="#" method="POST" class="space-y-6">
+              <div class="animate-slideRight1">
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-300">Email address</label>
+                <div class="mt-2">
+                  <input placeholder="Enter Email" id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-darker sm:text-sm sm:leading-6">
+                </div>
+              </div>
+
+              <div class="animate-slideRight2">
+                <label for="password" class="block text-sm font-medium leading-6 text-gray-300">Username</label>
+                <div class="mt-2">
+                  <input placeholder="Enter Username" id="username" name="username" type="text" autocomplete="username" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-darker sm:text-sm sm:leading-6">
+                </div>
+              </div>
+  
+              <div class="animate-slideRight3">
+                <label for="password" class="block text-sm font-medium leading-6 text-gray-300">Password</label>
+                <div class="mt-2">
+                  <input placeholder="Enter Password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-darker sm:text-sm sm:leading-6">
+                </div>
+              </div>
+ 
+              <div class="animate-slideRight4">
+                <label for="password" class="block text-sm font-medium leading-6 text-gray-300">Confirm Password</label>
+                <div class="mt-2">
+                  <input placeholder="Confirm Password" id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-darker sm:text-sm sm:leading-6">
+                </div>
+              </div>
+  
+              <div class="animate-slideRight5 flex items-center justify-between">
+                <div class="flex items-center">
+                  <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-gocolor focus:ring-darker duration-200">
+                  <label for="remember-me" class="ml-3 block text-sm leading-6 text-gray-500">Remember me</label>
+                </div>
+  
+          
+              </div>
+  
+              <div class="animate-slideRight6">
+                <button type="submit" class="flex w-full justify-center rounded-md text-white bg-gocolor hover:bg-darker duration-200 px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative hidden w-0 flex-1 lg:block">
+      <div class="animate-opacityUp absolute inset-0 bg-black backdrop-blur-sm z-10"></div>
+      <img class="absolute inset-0 h-full w-full object-cover" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/27/ac/d2/8f/caption.jpg?w=1200&h=-1&s=1" alt="">
+    </div>
+  </div>
+  
