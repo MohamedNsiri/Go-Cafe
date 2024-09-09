@@ -14,8 +14,7 @@ export class SignInComponent {
   passwordFieldType: string = 'password';
 
   togglePasswordVisibility(): void {
-    this.passwordFieldType =
-      this.passwordFieldType === 'password' ? 'text' : 'password';
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
 }
