@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from '../../services/data.service';
+import { Router } from '@angular/router';  // Import the Router service
 
 @Component({
   selector: 'app-create-account',
@@ -12,24 +14,77 @@ export class CreateAccountComponent {
   ngOnInit(){
   }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public dataService: DataService, private router: Router) {
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      password: [' ', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
+      name: ['', Validators.required],
+      password: ['12345678', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['12345678', Validators.required],
       rememberMe: [false],
     });
   }
 
-  onSubmit() {
-    if (this.form.valid) {
+  passwordConfirmation(){
+    return this.form.get('password')?.value === this.form.get('confirmPassword')?.value
+  }
+  
+  bo: boolean = false;
+  message: string = '';
+  messageColor: string = '';
+  loading: boolean = false;
+
+  onSubmit(data: any) {
+    this.loading = true;
+    if (this.form.valid && this.passwordConfirmation()) {
+      
+      this.dataService.create_account(data).subscribe(
+        response => {
+          this.bo = true
+          this.message = response.message;
+          this.messageColor = 'green';
+          this.loading = false;
+
+          this.dataService.users.push(this.form.value);
+
+          this.dataService.storeToken(response.token);
+
+          this.form.reset();
+
+          //console.log(this.message);
+          //console.log(response.token);
+          setTimeout( ()=>{this.bo = false; this.messageColor = '';this.message = '';this.router.navigate(['/'])}, 3000);
+        },
+
+        error => {
+          this.bo = true
+          this.messageColor = 'red';
+          this.loading = false;
+
+          if (error.error && error.error.errors) {
+            if (error.error.errors.email) {
+              this.message = error.error.errors.email[0];
+            } else {
+              this.message = "Validation failed. Please check the input.";
+            }
+          } else {
+            this.message = error.message || "An error occurred.";
+          }
+
+          //console.error(this.message);
+
+          setTimeout( ()=>{this.bo = false; this.messageColor = ''; this.message = '';}, 3000);
+          
+        }
+
+      );
       console.log(this.form.value);
+      
     } else {
-      console.log('Form is invalid');
+      this.form.markAllAsTouched();
     }
   }
+  
 
   passwordFieldType: string = 'password';
   confirmPasswordFieldType: string = 'password';

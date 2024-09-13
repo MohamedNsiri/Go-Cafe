@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
     extend: {
+      fontFamily: {
+        thesignature: ['thesignature', 'sans-serif'], // 'custom' will be used as the key
+        opensans: ['Open Sans', 'sans-serif']
+      },
       boxShadow: {
         '3xl': '10px 10px 100px -15px rgba(0, 0, 0, 0.3)',
       },
@@ -17,6 +21,12 @@ module.exports = {
           '0%': { transform: 'translateY(180px)', opacity: '0' },
           '100%': { transform: 'translateY(0)', opacity: '1' },
         },
+        slideUp2: {
+          '0%': { transform: 'translateY(100%)', opacity: '0' },  // Start off screen
+          '10%': { transform: 'translateY(0)', opacity: '1' },    // Slide into view
+          '90%': { transform: 'translateY(0)', opacity: '1' },    // Stay in view
+          '100%': { transform: 'translateY(100%)', opacity: '0' }, // Slide out and disappear
+        },
         slideRight: {
           '0%': { transform: 'translateX(-100%)', opacity: '0'},
           '100%': { transform: 'translateX(0)', opacity: '1' }
@@ -27,6 +37,7 @@ module.exports = {
         }
       },
       animation: {
+        slideUpMessage: 'slideUp2 3s ease-in-out forwards',
         slideUp: 'slideUp 1s ease-out forwards',
         slideUp2: 'slideUp 1.4s ease-out forwards',
         slideUp3: 'slideUp 1.2s ease-out forwards',

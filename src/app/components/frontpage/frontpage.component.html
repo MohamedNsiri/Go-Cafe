@@ -274,7 +274,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div class="flex h-16 items-center">
             <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. -->
-            <button (click)="toggleMenu()" type="button" class="rounded-md bg-orange-950 p-2 text-gocolor lg:hidden">
+            <button (click)="toggleMenu()" type="button" class="rounded-md bg-transparent p-2 text-gocolor lg:hidden">
               <span class="sr-only">Open menu</span>
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -288,8 +288,10 @@
                 <img class="h-16 w-auto" src="assets/images/logo.png" alt="">
               </a>
             </div>
-  
-            <!-- Flyout menus -->
+
+              <h1 class="absolute right-16 lg:right-28 z-50 lg:w-20 lg:mb-2 text-gocolor overflow-hidden whitespace-nowrap text-ellipsis font-mono text-xl">{{user?.name}}</h1>
+
+              <!-- Flyout menus -->
             <div class="hidden lg:ml-8 lg:block lg:self-stretch">
               <div class="flex h-full space-x-8">
                 <div class="flex">
@@ -554,12 +556,12 @@
                 <a href="#location" class="flex items-center text-sm font-medium text-gocolor hover:text-darker transition-colors duration-200 ease-out">Location</a>
                 <div href="#" class="p-2 text-gray-400 lg:ml-4 translate-x-[350px] flex gap-8 translate-y-2">
                   <span class="sr-only">Account</span>
-                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <svg [ngClass]="{'text-gocolor translate-x-[150px]': user}" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                   </svg> 
-                  <span> <a routerLink="/create_account" class="hover:text-gray-500 cursor-pointer">Create Account</a> </span>
-                  <span>|</span>
-                  <span> <a routerLink="/sign_in" class="hover:text-gray-500 cursor-pointer">Sign In</a> </span>
+                  <span *ngIf="!user"> <a routerLink="/create_account" class="hover:text-gray-500 cursor-pointer">Create Account</a> </span>
+                  <span *ngIf="!user">|</span>
+                  <span *ngIf="!user"> <a routerLink="/sign_in" class="hover:text-gray-500 cursor-pointer">Sign In</a> </span>
                 </div>
               </div>
             </div>
@@ -578,7 +580,7 @@
     <!-- Content -->
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="sm:max-w-lg pt-10">
-            <h1 class=" text-4xl font-bold tracking-tight text-gray-950 sm:text-6xl">Welcome to <span class="change-color">Go Café</span>, Tunisian traditional <br><span class="text-gocolor change-color">Resto-Café</span></h1>
+            <h1 class=" text-4xl font-bold  text-gray-950 sm:text-6xl font-opensans tracking-tight">Welcome to <span class="change-color">Go Cafe</span>, Tunisian traditional <br><span class="text-gocolor change-color">Resto-Café</span></h1>
             <p class=" mt-4 text-xl text-gray-300">This year, our new summer brews will warm your soul in a world that doesn’t mind if you thrive or survive.</p>
         </div>
         <div>

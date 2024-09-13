@@ -9,6 +9,8 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { OurstoryComponent } from './components/ourstory/ourstory.component';
 import { CreateAccountComponent } from './components/create-account/create-account.component';
 import { SignInComponent } from './components/sign-in/sign-in.component'
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './services/auth.interceptor';
 
 
 @NgModule({
@@ -24,10 +26,12 @@ import { SignInComponent } from './components/sign-in/sign-in.component'
     AppRoutingModule,
     FormsModule,
     GoogleMapsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withInterceptors([authInterceptor])),
+
   ],
   bootstrap: [AppComponent]
 })
