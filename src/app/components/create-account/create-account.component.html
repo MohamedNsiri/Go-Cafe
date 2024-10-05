@@ -27,7 +27,7 @@
         <img routerLink="/" class="cursor-pointer h-16 w-auto" src="assets/images/logo.png" alt="Your Company">
         <h2 class="lg:mt-4 text-2xl font-bold leading-9 tracking-tight text-gocolor font-opensans">Create account</h2>
         <p class=" text-sm leading-6 text-gray-500">
-          already a member?
+          Already a member?
           <a routerLink="/sign_in" class="font-semibold text-gocolor hover:text-darker duration-200">Sign In</a>
         </p>
       </div>
@@ -131,14 +131,14 @@
             </div>
           </form>
           <div>
-            <div *ngIf="loading && !bo" class="absolute translate-x-40 lg:translate-x-44 ">
-              <div class="w-8 h-8 lg:mt-2 mt-10 border-4 border-dashed rounded-full animate-spin border-darker"></div>
+            <div *ngIf="loading && !bo" class="absolute mt-2 translate-x-40 lg:translate-x-44 ">
+              <span class="loading loading-spinner loading-lg bg-darker"></span>
             </div>
             
             <div 
-            [ngClass]="{'animate-slideUpMessage fixed lg:inset-x-auto inset-x-0 lg:w-96 w-80 mx-auto rounded-sm bottom-0 text-center text-white p-1 z-50': bo }"
+            [ngClass]="{'animate-slideUpMessage p-3 fixed lg:inset-x-auto inset-x-0 lg:w-96 w-80 mx-auto rounded-sm bottom-0 text-center text-white z-50': bo }"
             [ngStyle]="{'background-color': this.messageColor}">
-              {{ message }}
+              {{ this.message }}
             </div>
           </div>
         </div>        

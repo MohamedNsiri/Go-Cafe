@@ -1,7 +1,15 @@
-import { Component, HostListener } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { DataService } from '../../services/data.service';
+import {MatButtonModule} from '@angular/material/button';
 
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-frontpage',
@@ -15,13 +23,14 @@ export class FrontpageComponent {
   foodMenuOpen = false;
   marketMenuOpen = false;
   user: any;
+  rating: number = 0;
+  message_body: string ='';
 
-  constructor(private router : Router, public dataService: DataService) { }
+  constructor(private router : Router, public dataService: DataService) {}
 
   ngOnInit(){
     this.dataService.getUserInfo().subscribe(
       (data) => {
-        console.log(data)
         this.user = this.capitalizeUserName(data)
       },
       (error) => {
@@ -37,6 +46,10 @@ export class FrontpageComponent {
     return user;
   }
 
+  goToManageAccount(){
+    this.router.navigate(['/manage_account', this.user.id])
+  }
+
   toggleMarketMenu(){
     this.marketMenuOpen = !this.marketMenuOpen
     this.foodMenuOpen = false
@@ -49,11 +62,95 @@ export class FrontpageComponent {
 
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
-    setTimeout(()=>{ this.hidden = !this.hidden }, 200);
+    
+    if (!this.menuOpen) {
+      setTimeout(() => { this.hidden = true }, 300); // match this delay to CSS transition duration
+    } else {
+      this.hidden = false;
+    }
   }
 
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
-  
+
+  onRatingChange(newRating: number): void {
+    console.log('Selected rating:', newRating);
+    this.rating = newRating;  // You can handle the new rating here
+  }
+
+  readonly dialog = inject(MatDialog);
+
+  openLogoutDialog() {
+    this.dialog.open(DialogLogOutConfirmation, {
+      width: '600px',
+    });
+  }
+
+  openDeletionDialog() {
+    this.dialog.open(DialogDeletionConfirmation, {
+      width: '600px',
+    });
+  }
+
+  submitFeedback(email: string, message_body: string, rating: number){
+    this.dataService.submitFeedback(email, message_body, rating).subscribe(
+      response => {
+        console.log(response.message)
+        this.rating = 0;
+        this.message_body = '';
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+
 }
+
+
+
+@Component({
+  selector: 'dialog-logout-confirmation-dialog',
+  templateUrl: 'dialog-logout-confirmation-dialog.html',
+  standalone: true,
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogLogOutConfirmation {
+
+  constructor(public dataservice: DataService, private router: Router) { }  
+  
+  logout(){
+    this.dataservice.logout();
+    setTimeout(()=>this.router.navigate(['/']), 500)
+  }
+}
+
+@Component({
+  selector: 'dialog-deletion-confirmation-dialog',
+  templateUrl: 'dialog-deletion-confirmation-dialog.html',
+  standalone: true,
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogDeletionConfirmation {
+
+  constructor(public dataservice: DataService, private router: Router) { }  
+  message: string = '';
+
+  deleteAccount(){
+    this.dataservice.deleteAccount().subscribe(
+      response => {
+        this.message = response.message;
+        setTimeout(()=>this.router.navigate(['/']), 500);
+        console.log(this.message);
+      },
+      error => {
+        console.error(error.error.message);
+      }
+    );
+  }
+}
+
+

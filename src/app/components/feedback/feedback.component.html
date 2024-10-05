@@ -1,0 +1,49 @@
+<div class="container mx-auto px-4 h-screen overflow-auto bg-slate-500">
+  <h1 class="text-4xl font-bold text-center text-gocolor mb-10">Feedback</h1>
+
+  <div *ngIf="feedbacks.length > 0 && !unauthorized">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div *ngFor="let feedback of feedbacks">
+        <mat-card
+         class="w-full shadow-lg p-4 hover:bg-slate-950 hover:-translate-y-5 duration-300 bg-gray-800 rounded-lg">
+          <mat-card-header class="flex items-center space-x-4">
+            <div mat-card-avatar class="flex-shrink-0">
+              <div class="rounded-full overflow-hidden w-16 h-16">
+                <img src="assets/images/logo.png" alt="User Avatar" class="object-cover w-full h-full">
+              </div>
+            </div>
+
+            <div class="flex-grow">
+              <mat-card-title class="text-white text-lg font-semibold overflow-hidden whitespace-nowrap text-ellipsis">{{feedback[1]}}</mat-card-title>
+              <mat-card-subtitle (click)="openEmail(feedback[0])" class="text-gray-400 cursor-pointer overflow-hidden whitespace-nowrap text-ellipsis">{{feedback[0]}}</mat-card-subtitle>
+            </div>
+          </mat-card-header>
+
+          <div class="mt-4 flex items-center">
+            <nz-rate class="scale-90" [ngModel]="feedback[2]" nzDisabled></nz-rate>
+          </div>
+
+          <mat-card-content (click)="openFeedback(feedback[1], feedback[0], feedback[2], feedback[3], feedback[4], '300ms', '150ms')" class="mt-4 cursor-pointer">
+            <p class="text-white overflow-hidden text-ellipsis h-[68px] leading-6 line-clamp-3">
+              {{feedback[3]}}
+            </p>
+          </mat-card-content>
+
+          <mat-card-actions class="mt-4">
+            <button class="hover:bg-gocolor/30 duration-200" mat-button> <span class="text-gocolor">LIKE</span></button>
+            <button class="hover:bg-gocolor/30 duration-200" mat-button> <span class="text-gocolor">SHARE</span></button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Display message when no feedback is available -->
+  <div *ngIf="feedbacks.length === 0 && !unauthorized" class="text-center">
+    <p class="text-gray-500">No feedback available.</p>
+  </div>
+  
+  <div *ngIf="unauthorized" class="text-center">
+    <h1 class="text-red-500">Access Denied!</h1>
+  </div>
+</div>

@@ -34,9 +34,17 @@ module.exports = {
         opacityUp: {
           '0%': { opacity: '0'},
           '100%': { opacity: '0.6' }
+        },
+        heightened: {
+          '0%': { transform: 'scaleY(0.95)'},
+          '100%': { transform: 'scaleY(1)'}
+        },
+        slide: {
+
         }
       },
       animation: {
+        heightened: 'heightened 1s ease-in-out forwards',
         slideUpMessage: 'slideUp2 3s ease-in-out forwards',
         slideUp: 'slideUp 1s ease-out forwards',
         slideUp2: 'slideUp 1.4s ease-out forwards',
@@ -54,6 +62,8 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/forms'),
-    require('@tailwindcss/aspect-ratio')
+    require('@tailwindcss/aspect-ratio'),
+    require('daisyui'),
+    require('@tailwindcss/line-clamp')
   ],
 }
